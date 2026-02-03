@@ -1,68 +1,38 @@
 # ☁️ MineCloud IaC
 
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-![Ansible](https://img.shields.io/badge/ansible-%231A1918.svg?style=for-the-badge&logo=ansible&logoColor=white)
-![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
-![Debian](https://img.shields.io/badge/debian-%23D70A53.svg?style=for-the-badge&logo=debian&logoColor=white)
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) ![Ansible](https://img.shields.io/badge/ansible-%231A1918.svg?style=for-the-badge&logo=ansible&logoColor=white) ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white) ![Debian](https://img.shields.io/badge/debian-%23D70A53.svg?style=for-the-badge&logo=debian&logoColor=white)
 
-MineCloud est un projet d'**Infrastructure-as-Code (IaC)** complet permettant de déployer automatiquement un serveur **Minecraft** et une **API de monitoring Flask** sur une machine virtuelle **Debian 13** avec **VirtualBox**.
+MineCloud est un projet d'**Infrastructure-as-Code** complet. Il automatise le déploiement d'un serveur Minecraft et d'une API de monitoring sur une VM Debian 13 via **VirtualBox**.
 
 ---
 
-## 🏗️ Architecture du projet
-
-Ce projet orchestre l'ensemble du cycle de vie de l'infrastructure :
-
-1. **Packer** : Construction d'une image Debian 13 personnalisée ("Golden Image") avec Docker préinstallé.  
-2. **Terraform** : Provisioning de la VM sur VirtualBox (CPU, RAM, réseau).  
-3. **Ansible** : Configuration de l’OS, correctifs Docker et déploiement applicatif.  
-4. **Docker Compose** : Orchestration des conteneurs (serveur de jeu + API Python).
-
----
-
-## 📂 Structure des fichiers
+## 📂 Structure du projet
 
 ```text
 .
-├── packer/          # Automatisation de l'image OS (y ajouter l'ISO Debian)
-├── terraform/       # Définition de la VM (Provider VirtualBox)
-├── ansible/         # Playbooks de déploiement (Fix Buildx & Docker)
-├── app/             # Code source applicatif
-│   ├── status-app/  # API Flask (Monitoring + Dockerfile)
-│   ├── backup.sh    # Script de sauvegarde du monde Minecraft
-│   └── docker-compose.yml
-└── Makefile         # Orchestration globale du projet
+├── packer/          # Image ISO Debian 13 personnalisée
+├── terraform/       # Provisioning VM VirtualBox
+├── ansible/         # Configuration et déploiement Docker
+├── app/             # Code source (Flask + Docker Compose)
+└── screen.png       # Capture d'écran du projet
+```
+## 🚀 Déploiement 
 
-🚀 Déploiement
+Télécharger le dépot :
+```git clone https://github.com/WhatIsLove/Minecloud.git```
 
-Le déploiement est piloté par un Makefile pour simplifier les étapes :
+Placer son iso dans ```packer/```
 
-# 1. Construire l'image de base Debian
-make build-image
+Lancer : ```make all```
 
-# 2. Déployer l'infrastructure (VM VirtualBox)
-make infra
-
-# 3. Déployer les services (Docker & Flask)
-make deploy
-
-🛠️ Solutions techniques & correctifs
-
-Le projet intègre des solutions à des problématiques réelles de déploiement :
-
-    Contournement Docker Buildx
-    Utilisation de DOCKER_BUILDKIT=0 pour le build de l'image Flask afin d'éviter les erreurs exec format error en environnement virtualisé.
-
-    Idempotence
-    Les playbooks Ansible permettent de relancer le déploiement sans interrompre inutilement les services.
-
-    Healthchecks
-    Le conteneur Minecraft est configuré avec un monitoring d'état pour assurer la disponibilité du service.
 
 📊 Accès aux services
+```text
 Service	Adresse	Port
-Serveur Minecraft	localhost	25565
-API Status (Flask)	http://localhost
-	5000
-📸 Screenshots
+Minecraft	localhost	25565
+API Flask	http://localhost	5000
+
+```
+
+📸 Screenshot
+<img src="screen.png" width="100%" alt="Rendu du projet">
