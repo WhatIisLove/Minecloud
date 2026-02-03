@@ -6,7 +6,7 @@
 ![Debian](https://img.shields.io/badge/debian-%23D70A53.svg?style=for-the-badge&logo=debian&logoColor=white)
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
-MineCloud est un projet d'**Infrastructure-as-Code (IaC)** complet permettant de déployer automatiquement un serveur Minecraft et une API de monitoring Flask sur une machine virtuelle Debian 13.
+MineCloud est un projet d'**Infrastructure-as-Code (IaC)** complet permettant de déployer automatiquement un serveur Minecraft et une API de monitoring Flask sur une machine virtuelle Debian 13 avec VIRTUALBOX !
 
 ## 🏗️ Architecture du Projet
 
@@ -21,7 +21,7 @@ Ce projet orchestre l'ensemble du cycle de vie de l'infrastructure :
 
 ```text
 .
-├── packer/          # Automatisation de l'image OS (ISO Debian 13)
+├── packer/          # Automatisation de l'image OS (y ajouter l'iso de debian)
 ├── terraform/       # Définition de la VM (Provider VirtualBox)
 ├── ansible/         # Playbooks de déploiement (Correction Buildx & Docker)
 ├── app/             # Code source applicatif
