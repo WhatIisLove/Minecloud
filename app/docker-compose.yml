@@ -1,0 +1,25 @@
+version: "3.8"  # Optionnel mais recommandé
+
+services:
+  minecraft:    # Doit être décalé de 2 espaces
+    image: itzg/minecraft-server
+    container_name: minecraft-srv
+    environment:
+      EULA: "TRUE"
+      VERSION: "1.21.1"
+      MEMORY: "2G"
+    ports:
+      - "25565:25565"
+    volumes:
+      - mc_data:/data
+    restart: unless-stopped
+
+  web-api:      # Doit être au même niveau que 'minecraft'
+    image: minecloud-status-app
+    container_name: flask-app
+    ports:
+      - "5000:5000"
+    restart: always
+
+volumes:
+  mc_data:
