@@ -1,4 +1,4 @@
-# ☁️ MineCloud – Infrastructure as Code (IaC)
+# ☁️ MineCloud IaC
 
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Ansible](https://img.shields.io/badge/ansible-%231A1918.svg?style=for-the-badge&logo=ansible&logoColor=white)
@@ -6,7 +6,7 @@
 ![Debian](https://img.shields.io/badge/debian-%23D70A53.svg?style=for-the-badge&logo=debian&logoColor=white)
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
-MineCloud est un projet d'**Infrastructure-as-Code (IaC)** complet permettant de déployer automatiquement un **serveur Minecraft** et une **API de monitoring Flask** sur une machine virtuelle **Debian 13** avec **VirtualBox**.
+MineCloud est un projet d'**Infrastructure-as-Code (IaC)** complet permettant de déployer automatiquement un serveur **Minecraft** et une **API de monitoring Flask** sur une machine virtuelle **Debian 13** avec **VirtualBox**.
 
 ---
 
@@ -14,17 +14,10 @@ MineCloud est un projet d'**Infrastructure-as-Code (IaC)** complet permettant de
 
 Ce projet orchestre l'ensemble du cycle de vie de l'infrastructure :
 
-1. **Packer**  
-   → Construction d'une image Debian 13 personnalisée ("Golden Image") avec Docker préinstallé.
-
-2. **Terraform**  
-   → Provisioning de la VM VirtualBox (CPU, RAM, réseau).
-
-3. **Ansible**  
-   → Configuration du système, correctifs Docker et déploiement applicatif.
-
-4. **Docker Compose**  
-   → Orchestration des conteneurs (Minecraft + API Flask).
+1. **Packer** : Construction d'une image Debian 13 personnalisée ("Golden Image") avec Docker préinstallé.  
+2. **Terraform** : Provisioning de la VM sur VirtualBox (CPU, RAM, réseau).  
+3. **Ansible** : Configuration de l’OS, correctifs Docker et déploiement applicatif.  
+4. **Docker Compose** : Orchestration des conteneurs (serveur de jeu + API Python).
 
 ---
 
@@ -32,9 +25,9 @@ Ce projet orchestre l'ensemble du cycle de vie de l'infrastructure :
 
 ```text
 .
-├── packer/          # Automatisation de l'image OS (ISO Debian à placer ici)
+├── packer/          # Automatisation de l'image OS (y ajouter l'ISO Debian)
 ├── terraform/       # Définition de la VM (Provider VirtualBox)
-├── ansible/         # Playbooks de déploiement
+├── ansible/         # Playbooks de déploiement (Fix Buildx & Docker)
 ├── app/             # Code source applicatif
 │   ├── status-app/  # API Flask (Monitoring + Dockerfile)
 │   ├── backup.sh    # Script de sauvegarde du monde Minecraft
@@ -43,44 +36,33 @@ Ce projet orchestre l'ensemble du cycle de vie de l'infrastructure :
 
 🚀 Déploiement
 
-Le déploiement est entièrement automatisé via le Makefile :
+Le déploiement est piloté par un Makefile pour simplifier les étapes :
 
-# 1. Construire l'image de base Debian avec Packer
+# 1. Construire l'image de base Debian
 make build-image
 
-# 2. Déployer l'infrastructure VirtualBox avec Terraform
+# 2. Déployer l'infrastructure (VM VirtualBox)
 make infra
 
-# 3. Déployer les services applicatifs avec Ansible + Docker
+# 3. Déployer les services (Docker & Flask)
 make deploy
 
 🛠️ Solutions techniques & correctifs
 
-Le projet intègre des solutions à des problématiques réelles rencontrées en environnement virtualisé :
+Le projet intègre des solutions à des problématiques réelles de déploiement :
 
     Contournement Docker Buildx
-    Utilisation de DOCKER_BUILDKIT=0 pour éviter les erreurs exec format error lors du build des images Docker.
+    Utilisation de DOCKER_BUILDKIT=0 pour le build de l'image Flask afin d'éviter les erreurs exec format error en environnement virtualisé.
 
-    Idempotence Ansible
-    Les playbooks peuvent être relancés sans interrompre inutilement les services existants.
+    Idempotence
+    Les playbooks Ansible permettent de relancer le déploiement sans interrompre inutilement les services.
 
-    Healthchecks Docker
-    Le conteneur Minecraft est surveillé pour garantir la disponibilité du service.
+    Healthchecks
+    Le conteneur Minecraft est configuré avec un monitoring d'état pour assurer la disponibilité du service.
 
 📊 Accès aux services
 Service	Adresse	Port
 Serveur Minecraft	localhost	25565
-API Status (Flask)	http://localhost	5000
+API Status (Flask)	http://localhost
+	5000
 📸 Screenshots
-
-Capture du déploiement
-
-
----
-
-### 💡 Bonus (si tu veux améliorer encore ton README)
-
-Je peux te proposer :
-- Une section **"Prérequis"** (VirtualBox, Packer, Terraform, Ansible, Docker)
-- Une section **"Schéma d’architecture"** (diagramme simple)
-- Une section **"Troubleshooting"** (erreurs fréquentes rencontrées)
