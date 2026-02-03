@@ -34,6 +34,7 @@ Ce projet orchestre l'ensemble du cycle de vie de l'infrastructure :
 │   └── docker-compose.yml
 └── Makefile         # Orchestration globale du projet
 
+---
 🚀 Déploiement
 
 Le déploiement est piloté par un Makefile pour simplifier les étapes :
