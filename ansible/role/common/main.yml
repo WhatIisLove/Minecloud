@@ -1,0 +1,28 @@
+---
+- name: "Mise à jour APT"
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+- name: "Installation des dépendances"
+  apt:
+    name:
+      - curl
+      - git
+      - htop
+      - unzip
+      - python3-pip
+      - docker.io
+      - docker-compose-plugin # C'est le vrai nom sous Debian
+    state: present
+
+- name: "Configuration de l'utilisateur minecloud"
+  user:
+    name: minecloud
+    groups: docker
+    append: yes
+
+- name: "Installation de la lib docker pour python"
+  pip:
+    name: docker
+    executable: pip3
