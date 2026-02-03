@@ -1,0 +1,39 @@
+---
+- name: "Configuration de la Golden Image"
+  hosts: all
+  become: yes
+  tasks:
+    - name: "Mise à jour des dépôts"
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: "Installation des prérequis"
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+          - python3-pip
+        state: present
+
+    - name: "Installation de Docker et Docker Compose"
+      apt:
+        name:
+          - docker.io
+          - docker-compose-v2
+        state: present
+
+    - name: "Ajout de l'utilisateur au groupe Docker"
+      user:
+        name: minecloud
+        groups: docker
+        append: yes
+
+    - name: "Activation de Docker au démarrage"
+      systemd:
+        name: docker
+        enabled: yes
+        state: started

@@ -1,0 +1,41 @@
+---
+- name: "Déploiement MineCloud"
+  hosts: all
+  become: yes
+  tasks:
+    - name: "1. Nettoyage des plugins Docker corrompus"
+      file:
+        path: /usr/local/lib/docker/cli-plugins/docker-buildx
+        state: absent
+
+    - name: "2. Création du dossier /opt/minecloud"
+      file:
+        path: /opt/minecloud
+        state: directory
+        owner: minecloud
+        group: docker
+        mode: '0755'
+
+    - name: "3. Transfert des fichiers (Source: app/)"
+      copy:
+        src: ../app/
+        dest: /opt/minecloud/
+        owner: minecloud
+        group: docker
+
+    - name: "4. Build de l'image Flask (Dossier: status-app)"
+      shell: "DOCKER_BUILDKIT=0 docker build -t minecloud-status-app /opt/minecloud/status-app"
+
+    - name: "5. Lancement des conteneurs via Docker Compose"
+      shell: "/usr/local/bin/docker-compose up -d"
+      args:
+        chdir: /opt/minecloud
+      async: 600
+      poll: 10
+
+    - name: "6. Vérification"
+      shell: "docker ps"
+      register: docker_status
+
+    - debug:
+        var: docker_status.stdout_lines
