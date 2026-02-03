@@ -6,16 +6,20 @@
 ![Debian](https://img.shields.io/badge/debian-%23D70A53.svg?style=for-the-badge&logo=debian&logoColor=white)
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
-MineCloud est un projet d'**Infrastructure-as-Code (IaC)** complet permettant de déployer automatiquement un serveur Minecraft et une API de monitoring Flask sur une machine virtuelle Debian 13 avec VIRTUALBOX !
+MineCloud est un projet d'**Infrastructure-as-Code (IaC)** complet permettant de déployer automatiquement un serveur Minecraft et une API de monitoring Flask sur une machine virtuelle Debian 13 avec **VirtualBox** !
+
+---
 
 ## 🏗️ Architecture du Projet
 
 Ce projet orchestre l'ensemble du cycle de vie de l'infrastructure :
 
-1.  **Packer** : Construction d'une image ISO Debian 13 personnalisée ("Golden Image") avec Docker pré-installé.
-2.  **Terraform** : Provisioning de la VM sur VirtualBox (gestion des ressources CPU, RAM, Réseau).
-3.  **Ansible** : Configuration OS, gestion des correctifs Docker et déploiement de l'application.
-4.  **Docker Compose** : Orchestration des conteneurs (Serveur de jeu + API Python).
+1. **Packer** : Construction d'une image ISO Debian 13 personnalisée ("Golden Image") avec Docker pré-installé.
+2. **Terraform** : Provisioning de la VM sur VirtualBox (gestion des ressources CPU, RAM, Réseau).
+3. **Ansible** : Configuration OS, gestion des correctifs Docker et déploiement de l'application.
+4. **Docker Compose** : Orchestration des conteneurs (Serveur de jeu + API Python).
+
+---
 
 ## 📂 Structure des fichiers
 
@@ -29,7 +33,6 @@ Ce projet orchestre l'ensemble du cycle de vie de l'infrastructure :
 │   ├── backup.sh    # Script de sauvegarde du monde
 │   └── docker-compose.yml
 └── Makefile         # Orchestration globale du projet
-
 
 🚀 Déploiement
 
@@ -59,8 +62,6 @@ Le projet intègre des solutions à des problématiques réelles de déploiement
 Service	Adresse	Port
 Serveur Minecraft	localhost	25565
 API Status (Flask)	http://localhost	5000
+📸 Screenshots
 
-
-SCREENSHOTS
-<img width="1480" height="872" alt="image" src="https://github.com/user-attachments/assets/17e3441b-3240-4426-b225-e25905f34f9c" />
-
+<p align="center"> <img width="1480" alt="Capture du déploiement" src="https://github.com/user-attachments/assets/17e3441b-3240-4426-b225-e25905f34f9c" /> </p>
