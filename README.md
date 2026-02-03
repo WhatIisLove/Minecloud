@@ -29,3 +29,33 @@ Ce projet orchestre l'ensemble du cycle de vie de l'infrastructure :
 │   ├── backup.sh    # Script de sauvegarde du monde
 │   └── docker-compose.yml
 └── Makefile         # Orchestration globale du projet
+
+
+🚀 Déploiement
+
+Le déploiement est piloté par un Makefile pour simplifier les étapes :
+Bash
+
+# 1. Construire l'image de base Debian
+make build-image
+
+# 2. Déployer l'infrastructure (VM VirtualBox)
+make infra
+
+# 3. Déployer les services (Docker & Flask)
+make deploy
+
+🛠️ Solutions techniques & Fixes
+
+Le projet intègre des solutions à des problématiques réelles de déploiement :
+
+    Contournement Docker Buildx : Utilisation du mode DOCKER_BUILDKIT=0 pour le build de l'image Flask afin d'éviter les erreurs exec format error sur les environnements virtualisés.
+
+    Idempotence : Les playbooks Ansible permettent de relancer le déploiement sans interrompre les services inutilement.
+
+    Healthchecks : Le conteneur Minecraft est configuré avec un monitoring d'état pour assurer la disponibilité du service.
+
+📊 Accès aux services
+Service	Adresse	Port
+Serveur Minecraft	localhost	25565
+API Status (Flask)	http://localhost	5000
