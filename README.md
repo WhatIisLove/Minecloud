@@ -63,6 +63,8 @@ Le projet intègre des solutions à des problématiques réelles de déploiement
 Service	Adresse	Port
 Serveur Minecraft	localhost	25565
 API Status (Flask)	http://localhost	5000
-📸 Screenshots
+---
 
-<p align="center"> <img width="1480" alt="Capture du déploiement" src="https://github.com/user-attachments/assets/17e3441b-3240-4426-b225-e25905f34f9c" /> </p>
+## 📸 Screenshots
+
+![Capture du déploiement](https://github.com/user-attachments/assets/17e3441b-3240-4426-b225-e25905f34f9c)
